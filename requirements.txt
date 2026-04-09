@@ -1,0 +1,11 @@
+langchain
+langchain-openai
+langchain-community
+faiss-cpu
+pypdf
+python-docx
+python-dotenv
+streamlit
+duckduckgo-search
+openai
+tiktoken

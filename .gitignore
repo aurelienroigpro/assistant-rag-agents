@@ -1,0 +1,32 @@
+# Environnement
+.env
+venv/
+.venv/
+.venv-1/
+
+# Conda / Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Base vectorielle / données générées
+data/vectorstore/
+chroma_db/
+faiss_index/
+
+# Documents (IMPORTANT)
+data/documents/
+
+# Logs
+*.log
