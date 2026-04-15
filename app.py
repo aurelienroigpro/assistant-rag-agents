@@ -358,6 +358,27 @@ Consignes :
     response = llm.invoke(rag_prompt)
     return response.content, docs
 
+def chat_tool(question: str, history_text: str):
+    chat_prompt = f"""
+Tu es un assistant conversationnel sympathique et naturel.
+
+Historique récent :
+{history_text}
+
+Question :
+{question}
+
+Consignes :
+- Réponds comme un assistant généraliste, naturellement.
+- Si l'utilisateur te parle simplement, réponds simplement.
+- Ne fais pas de recherche web.
+- N'utilise pas les documents.
+- Ne donne pas la signification linguistique de la phrase sauf si l'utilisateur le demande explicitement.
+
+Réponse :
+"""
+    response = llm.invoke(chat_prompt)
+    return response.content
 
 # ===== AGENT =====
 def format_history(history, max_turns=5):
@@ -381,6 +402,7 @@ Tu dois choisir exactement un seul outil parmi :
 - rag
 - web
 - weather
+- chat
 
 Historique récent :
 {history_text}
@@ -393,6 +415,7 @@ Règles :
 - Choisis "weather" pour la météo, la température, la pluie, le climat actuel d'une ville.
 - Choisis "rag" si la question concerne un sujet académique, technique ou présent dans les documents (ex : architecture ordinateur, assembleur, cours).
 - Choisis "web" uniquement si la question nécessite une information externe ou récente (actualité, personnes, événements, etc.).
+- Choisis "chat" pour une conversation générale ou des questions non traitées par les autres outils.
 
 Réponds uniquement par un seul mot parmi :
 calculator
@@ -400,6 +423,7 @@ date
 rag
 web
 weather
+chat
 """
 
     decision = llm.invoke(decision_prompt).content.strip().lower()
@@ -410,6 +434,10 @@ weather
 
     elif "date" in decision:
         return date_tool()
+    
+    elif "chat" in decision:
+        response = chat_tool(question, history_text)
+        return response
 
     elif "weather" in decision:
         result = weather_tool(question)
