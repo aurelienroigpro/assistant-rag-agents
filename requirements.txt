@@ -16,5 +16,5 @@ ddgs
 
 requests
 python-dotenv
-python==3.10.11
+
 protobuf==4.25.3
