@@ -12,8 +12,13 @@ from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 # from duckduckgo_search import DDGS
 from ddgs import DDGS
-from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())
+import os
+
+api_key = os.getenv("OPENAI_API_KEY")
+
+
+# from dotenv import load_dotenv, find_dotenv
+# _ = load_dotenv(find_dotenv())
 
 
 # ===== TITRE de la page de navigateur =====
@@ -62,12 +67,15 @@ def load_pipeline():
 
     # Embeddings + DB des chunks, pour recherche ultérieure via le LLM:
 
-    embedding = OpenAIEmbeddings(model="text-embedding-3-small")
+    embedding = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=api_key)
     vectorstore = Chroma.from_documents(chunks, embedding)
 
     retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
-
+#OpenAIEmbeddings(
+#    model="text-embedding-3-small",
+#    openai_api_key=api_key
+# )
 
 
     # Mise en place du LLM: gpt d'Open AI
