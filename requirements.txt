@@ -17,3 +17,4 @@ ddgs
 
 requests
 python-dotenv
+protobuf==4.25.3
